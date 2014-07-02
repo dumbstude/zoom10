@@ -1,0 +1,212 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:prcc="http://java.sun.com/jsf/composite/prcomponents" 
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/templates/memberLayout.xhtml">
+        <ui:define name="top">
+            #{bundle.Validate}
+        </ui:define>
+        <ui:define id="valcontent" name="content"> 
+            <h:form id="valForm">
+                <f:event type="preRenderView" listener="#{applicantBean.init}"/>
+                <p:dataTable id="applkcantList"
+                             value="#{applicantBean.applicantModel}"
+                             var="aList"
+                             rowIndexVar="rowIndex" 
+                             rowKey="#{aList.applicantNo}"
+                             widgetVar="applicantList"
+                             filteredValue= "#{applicantBean.filteredApplicants}"
+                             scrollRows="20"
+                             scrollable="true"
+                             scrollWidth="370"
+                             liveScroll="true"
+                             selection="#{applicantBean.selectedApplicant}"
+                             selectionMode="single"
+                             scrollHeight="150">
+                    <p:ajax event="rowSelect"
+                            async="true"
+                            update=":valForm"/>
+                    <p:column id="applicantNoColumn" 
+                              filterBy="#{aList.applicantNo}"   
+                              headerText="Application No"   
+                              filterMatchMode="exact">  
+                        <h:outputText value="#{aList.applicantNo}" />  
+                    </p:column>  
+                    <p:column id="lastNameColumn"
+                              filterBy="lastName"
+                              filterMatchMode="exact"
+                              headerText="Last Name" >
+                        <h:outputText value="#{aList.lastName}" />
+                    </p:column>
+                    <p:column id="firstNameColumn"
+                              filterBy="firstName"
+                              filterMatchMode="exact"
+                              headerText="First Name" >
+                        <h:outputText value="#{aList.firstName}" />
+                    </p:column>
+                    <p:column id="middleNameColumn"
+                              filterBy="middleName"
+                              filterMatchMode="exact"
+                              headerText="Middle Name" >
+                        <h:outputText value="#{aList.middleName}" />
+                    </p:column>
+                </p:dataTable>
+                <h:message for="applicantList"/>
+                <br></br>
+                <br></br>
+                <h:panelGrid id="applicantPanel" columns="3" cellpadding="150" cellspacing="150" >
+                    <h:outputLabel id="lastNameLabel" 
+                                   for ="lastName" 
+                                   value="Surname"/>
+                    <h:inputText id="lastName" 
+                                 size="25" 
+                                 readonly="true"
+                                 value="#{applicantBean.selectedApplicant.lastName}"
+                                 label="Last Name"/>
+                    <h:message for="lastName"/>
+                    <h:outputLabel id="firstNameLabel" 
+                                   for ="firstName" 
+                                   value="First Name"/>
+                    <h:inputText id="firstName" 
+                                 size="25" 
+                                 readonly="true"
+                                 value="#{applicantBean.selectedApplicant.firstName}"
+                                 label="First Name"/>
+                    <h:message for="firstName"/>
+                    <h:outputLabel id="middleNameLabel" 
+                                   for="middleName" 
+                                   value="Middle Name"/>
+                    <h:inputText id="middleName" 
+                                 size="20" 
+                                 readonly="true"
+                                 value="#{applicantBean.selectedApplicant.middleName}"
+                                 label="Middle Name"/>
+                    <h:message for="middleName"/>
+                    <h:outputLabel id="birthdateLabel" 
+                                   for="birthdate" 
+                                   value="Birthdate "/>
+                    <h:inputText id="birthdate" 
+                                 size="10"
+                                 readonly="true"
+                                 value="#{applicantBean.selectedApplicant.birthdate}"
+                                 label="Birthdate" >
+                        <f:convertDateTime type="date" pattern="MM/dd/yyyy" />
+                    </h:inputText>
+                    <h:message for="birthdate"/>
+                    <h:outputLabel id="genderLabel" 
+                                   for="gender" 
+                                   value="Gender"/>
+                    <h:inputText id="gender" 
+                                 size="1"
+                                 readonly="true"
+                                 value="#{applicantBean.selectedApplicant.gender}"
+                                 label="Gender"/>
+                    <h:message for="gender"/>
+                    <h:outputLabel id="civstatLabel"
+                                   for="civstat"
+                                   value="Civil Status" />
+                    <h:inputText id="civilStatus"
+                                 size="1"
+                                 required="true"
+                                 readonly="true"
+                                 value="#{applicantBean.selectedApplicant.civilStatus}"
+                                 label ="Civil Status" />
+                    <h:message for="civilStatus"/>
+                    <h:outputLabel id="nationalityLabel" 
+                                   for="nationality" 
+                                   value="Nationality"/>
+                    <h:inputText id="nationality" 
+                                 size="10" 
+                                 required="true"
+                                 readonly="true"
+                                 value="#{applicantBean.selectedApplicant.nationality}"
+                                 label="Nationality"/>
+                    <h:message for="nationality"/>
+                    <h:outputLabel id="contactNumberLabel" 
+                                   for="contactNumber" 
+                                   value="Contact Number"/>
+                    <h:inputText id="contactNumber" 
+                                 size="11" 
+                                 readonly="true"
+                                 value="#{applicantBean.selectedApplicant.contactNumber}"
+                                 label="Contact Number"/>
+                    <h:message for="contactNumber"/>
+                    <h:outputLabel id="lengthOfStayLabel" 
+                                   for="lengthOfStay" 
+                                   value="Length of stay"/>
+                    <h:inputText id="lengthOfStay" 
+                                 size="6" 
+                                 readonly="true"
+                                 value="#{applicantBean.selectedApplicant.residentSince}"
+                                 label="Resident since"/>
+                    <h:message for="lengthOfStay"/>
+                    <h:outputLabel id="educationLabel"
+                                   for="education"
+                                   value="Education" />
+                    <h:inputText id="education"
+                                 size="1"
+                                 readonly="true"
+                                 value="#{applicantBean.selectedApplicant.education}"/>
+                    <h:message for="education" />
+                    <h:outputLabel id="occupationLabel" 
+                                   for="occupation"
+                                   value="Occupation"/>
+                    <h:inputText id="occupation" 
+                                 size="14" 
+                                 readonly="true"
+                                 value="#{applicantBean.selectedApplicant.occupation}"
+                                 label="Occupation"/>
+                    <h:message for="occupation"/>
+                    <h:outputLabel id="streetNameLabel"
+                                   for="streetName" 
+                                   value="Street Name" />
+                    <h:inputText id="streetName" label="Street Name" size="40" 
+                                 readonly="true"
+                                 value="#{applicantBean.selectedApplicant.street}"/>
+                    <h:message for="streetName"/>
+                    <h:outputLabel id="barangayLabel" 
+                                   for="barangay" 
+                                   value="Barangay"/>
+                    <h:inputText id="barangay" 
+                                 size="15" 
+                                 readonly="true"
+                                 value="#{applicantBean.selectedApplicant.barangay}"
+                                 label="Barangay"/>
+                    <h:message for="barangay"/>
+                    <h:outputLabel id="cityMunLabel" 
+                                   for="cityMun" 
+                                   value="City/Municipality"/>
+                    <h:inputText id="cityMun" size="15" 
+                                 readonly="true"
+                                 value="#{applicantBean.selectedApplicant.cityMun}"
+                                 label="City/Municipality"/>
+                    <h:message for="cityMun"/>
+                    <h:outputLabel id="ptNoLabel" 
+                                   for="ptNo" 
+                                   value="PT Number"/>
+                    <h:inputText id="ptNo" 
+                                 size="15" 
+                                 readonly="true"
+                                 value="#{applicantBean.selectedApplicant.ouCode.ouCode}"
+                                 label="PT Number"/>
+                    <h:message for="ptNo"/>
+                    <h:outputText value="&#160;" />     
+                </h:panelGrid>
+                <p><span style="margin-left:230px;"  >
+                        <h:commandButton id="backButton" 
+                                         value="Back " 
+                                         action="/xhtml/mainMember.xhtml" immediate="true" />
+                        <h:commandButton id="selectButton" 
+                                         disabled="#{empty applicantBean.selectedApplicant.applicantNo}" 
+                                         value="Select " 
+                                         action="/xhtml/addMember.xhtml" />
+                    </span> </p>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>
